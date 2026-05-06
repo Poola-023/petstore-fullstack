@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Usha Pet Store - Users</title>
+    <style>
+        body { font-family: sans-serif; margin: 50px; background-color: #f4f4f4; }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #007bff; color: white; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        h2 { color: #333; }
+    </style>
+</head>
+<body>
+
+<h2>Registered Users List</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Phone Number</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${usersList}">
+        <td th:text="${user.id}">1</td>
+        <td th:text="${user.username}">Name</td>
+        <td th:text="${user.phoneNumber}">Phone</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
