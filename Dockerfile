@@ -1,23 +1,23 @@
-# Use Java 17 (recommended for Spring Boot)
 FROM eclipse-temurin:17-jdk-alpine
 
-# Set working directory
 WORKDIR /app
 
-# Copy Maven wrapper & pom
+# Copy Maven wrapper and pom
 COPY pom.xml .
 COPY .mvn .mvn
 COPY mvnw .
 
+# ✅ FIX: Give execute permission to mvnw
+RUN chmod +x mvnw
+
 # Download dependencies
 RUN ./mvnw dependency:go-offline
 
-# Copy source
+# Copy source code
 COPY src src
 
-# Build the app
+# Build application
 RUN ./mvnw clean package -DskipTests
 
-# Run the app
-EXPOSE 8090
+EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "target/*.jar"]
