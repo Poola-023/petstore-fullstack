@@ -2,22 +2,25 @@ FROM eclipse-temurin:17-jdk-alpine
 
 WORKDIR /app
 
-# Copy Maven wrapper and pom
+# Copy maven wrapper & pom
 COPY pom.xml .
 COPY .mvn .mvn
 COPY mvnw .
-
-# ✅ FIX: Give execute permission to mvnw
 RUN chmod +x mvnw
 
 # Download dependencies
 RUN ./mvnw dependency:go-offline
 
-# Copy source code
+# Copy source
 COPY src src
 
-# Build application
+# Build the app
 RUN ./mvnw clean package -DskipTests
 
+# ✅ Copy the built jar to a fixed name
+RUN cp target/*.jar app.jar
+
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "target/*.jar"]
+
+# ✅ Run fixed jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
